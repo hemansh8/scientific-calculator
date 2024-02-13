@@ -105,3 +105,12 @@ a {
     color-scheme: dark;
   }
 }
+
+
+.output {
+  visibility: hidden;
+}
+
+.output[show="show"] {
+  visibility: visible;
+}
