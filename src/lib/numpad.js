@@ -123,54 +123,70 @@ export const special = [
         id: "sin",
         content: "sin",
         action: false,
+        visible: "default",
         expression: "sin("
+    },
+    {
+        id: "asin",
+        content: "asin",
+        action: false,
+        visible: "inverse",
+        expression: "asin("
     },
     {
         id: "cos",
         content: "cos",
         action: false,
+        visible: "default",
         expression: "cos("
     },
     {
         id: "acos",
         content: "acos",
         action: false,
+        visible: "inverse",
         expression: "acos("
     },
     {
         id: "tan",
         content: "tan",
         action: false,
+        visible: "default",
         expression: "tan("
     },
     {
         id: "atan",
         content: "atan",
         action: false,
+        visible: "inverse",
         expression: "atan("
     },
     {
         id: "log",
         content: "log",
         action: false,
+        visible: "default",
         expression: "log("
     },
     {
         id: "antilog",
         content: <>10<sup>x</sup></>,
         action: false,
+        visible: "inverse",
         expression: "10^"
     },
     {
         id: "square",
         content: <>x<sup>2</sup></>,
         action: false,
+        visible: "default",
         expression: "^2"
     },
     {
         id: "square-root",
         content: "sqrt",
         action: false,
+        visible: "inverse",
         expression: "sqrt("
     },
     {

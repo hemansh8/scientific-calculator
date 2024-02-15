@@ -114,3 +114,7 @@ a {
 .output[show="show"] {
   visibility: visible;
 }
+
+.special button[data-visible="false"] {
+  display: none;
+}

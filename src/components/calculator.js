@@ -8,6 +8,7 @@ export default function Calculator() {
     const [screenVal, setScreenVal] = useState("0");
     const [outputVisibility, setOutputVisibility] = useState("hide");
     const [resultFocus, setResultFocus] = useState(false);
+    const [defaultOperators, setDefaultOperators] = useState(true);
 
     // const [customVariables, setCustomVariables] = useState({});
     // Default mode is "rad"
@@ -37,6 +38,10 @@ export default function Calculator() {
     function showResult() {
         setOutputVisibility("show");
         setResultFocus(true);
+    }
+
+    function inverse() {
+        setDefaultOperators(prevView => !prevView);
     }
 
     function calculate(num) {
@@ -92,6 +97,9 @@ export default function Calculator() {
             case "result":
                 showResult();
                 break;
+            case "inverse":
+                inverse();
+                break;
             default:
                 calculate(input);
                 break;
@@ -109,8 +117,9 @@ export default function Calculator() {
                     { special.map(
                         (input) => {
                             const value = input.action === true ? input.id : input.action === false ? input.expression : input.content;
+                            const visibility = input.visible ? input.visible === "default" ? defaultOperators : !defaultOperators : null;
                             return (
-                                <Button key={input.id} handler={() => checkInput(value)}>{input.content}</Button>
+                                <Button key={input.id} handler={() => checkInput(value)} visibility={visibility}>{input.content}</Button>
                             )
                         }
                     )}
