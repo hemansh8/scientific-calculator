@@ -98,15 +98,16 @@ export const regular = [
 ];
 
 export const special = [
+    // {
+    //     id: "degree",
+    //     content: "DEG",
+    //     action: true
+    // },
     {
-        id: "degree",
-        content: "DEG",
-        action: true
-    },
-    {
-        id: "radian",
+        id: "angle",
         content: "RAD",
-        action: true
+        action: true,
+        angle: true
     },
     {
         id: "inverse",

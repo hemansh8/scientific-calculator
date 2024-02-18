@@ -10,9 +10,9 @@ export default function Calculator() {
     const [resultFocus, setResultFocus] = useState(false);
     const [defaultOperators, setDefaultOperators] = useState(true);
 
-    // const [customVariables, setCustomVariables] = useState({});
     // Default mode is "rad"
     const [mode, setMode] = useState("rad");
+
     useEffect(() => updateResult(), [expression]);
     useEffect(() => keyEvents(), []);
 
@@ -44,23 +44,48 @@ export default function Calculator() {
         setDefaultOperators(prevView => !prevView);
     }
 
+    function changeAngle() {
+        setMode(mode === "rad" ? "deg" : "rad");
+    }
+
     function calculate(num) {
         setExpression(prevExpression => prevExpression === "0" ? num : prevExpression + num);
     }
 
+    function degree(x) {
+        return function (y) {
+            return math[x](y * 180 / Math.PI);
+        };
+      }
+
+      function inverseDegree(x) {
+        return function (y) {
+            return math[x](y) * Math.PI / 180;
+        };
+      }
+
     function updateResult() {
         try {
-            const result = math.evaluate(expression);
+            const allVariables = {
+                sin: mode === "rad" ? math.sin : degree('sin'),
+                cos: mode === "rad" ? math.cos : degree('cos'),
+                tan: mode === "rad" ? math.tan : degree('tan'),
+                asin: mode === "rad" ? math.asin : inverseDegree('asin'),
+                acos: mode === "rad" ? math.acos : inverseDegree('acos'),
+                atan: mode === "rad" ? math.atan : inverseDegree('atan'),
+            };
+            const result = math.evaluate(expression, allVariables);
             if (expression === "0") {
                 setOutputVisibility("hide");
                 screenInput.current = "0";
             } else if (typeof result === "number" && !isNaN(result)) {
                 setScreenVal(Number(result).toFixed(4));
                 setOutputVisibility("show");
-                screenInput.current = result.toString();
+                screenInput.current = expression;
             } else {
                 setScreenVal("Error: Invalid expression");
                 setOutputVisibility("hide");
+                screenInput.current = expression;
             }
 
             if (resultFocus) {
@@ -69,6 +94,7 @@ export default function Calculator() {
         } catch (error) {
             setScreenVal("Error: Invalid expression");
             setOutputVisibility("hide");
+            screenInput.current = expression;
         }
     }
 
@@ -100,6 +126,9 @@ export default function Calculator() {
             case "inverse":
                 inverse();
                 break;
+            case "angle":
+                changeAngle();
+                break;
             default:
                 calculate(input);
                 break;
@@ -108,6 +137,9 @@ export default function Calculator() {
 
     return (
         <div className="calculator">
+            <p className="mode">
+                {mode}
+            </p>
             <div className="screen" mode={resultFocus}>
                 <div className="input">{expression}</div>
                 <div className="output" show={outputVisibility}>{screenVal}</div>
@@ -118,8 +150,9 @@ export default function Calculator() {
                         (input) => {
                             const value = input.action === true ? input.id : input.action === false ? input.expression : input.content;
                             const visibility = input.visible ? input.visible === "default" ? defaultOperators : !defaultOperators : null;
+                            const content = input.angle ? mode.toUpperCase() : input.content;
                             return (
-                                <Button key={input.id} handler={() => checkInput(value)} visibility={visibility}>{input.content}</Button>
+                                <Button key={input.id} handler={() => checkInput(value)} visibility={visibility}>{content}</Button>
                             )
                         }
                     )}
