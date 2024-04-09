@@ -84,7 +84,7 @@ export default function Calculator() {
                 setOutputVisibility("hide");
                 screenInput.current = "0";
             } else if (typeof result === "number" && !isNaN(result)) {
-                setScreenVal(Number(result).toFixed(4));
+                setScreenVal(Number(result).toFixed(2));
                 setOutputVisibility("show");
                 screenInput.current = expression;
             } else {

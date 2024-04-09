@@ -120,14 +120,26 @@ a {
 .screen {
   padding: 0.5rem;
   text-align: right;
+  font-size: 3rem;
+}
+
+.screen[data-mode="true"] {
+  font-size: 1.5rem;
 }
 
 .output {
   visibility: hidden;
+  font-size: 1.5rem;
+  padding: 0.5rem 0;
 }
 
 .output[show="show"] {
   visibility: visible;
+}
+
+
+.screen[data-mode="true"] .output {
+  font-size: 3rem;
 }
 
 .special {
@@ -167,6 +179,9 @@ a {
 .calculator .body .regular button {
   aspect-ratio: 1;
   font-size: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .calculator .body .regular button[data-visible="false"] {
