@@ -75,12 +75,14 @@ export const regular = [
     {
         id: "resize-up",
         content: <Image src={SizeUp} alt='size up'/>,
-        action: true
+        action: true,
+        visible: "default"
     },
     {
         id: "resize-down",
         content: <Image src={SizeDown} alt='size down'/>,
-        action: true
+        action: true,
+        visible: "expanded"
     },
     {
         id: "0",

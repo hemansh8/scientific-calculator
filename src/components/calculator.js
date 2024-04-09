@@ -9,6 +9,7 @@ export default function Calculator() {
     const [outputVisibility, setOutputVisibility] = useState("hide");
     const [resultFocus, setResultFocus] = useState(false);
     const [defaultOperators, setDefaultOperators] = useState(true);
+    const [collapsed, setCollapsed] = useState(true);
 
     // Default mode is "rad"
     const [mode, setMode] = useState("rad");
@@ -46,6 +47,10 @@ export default function Calculator() {
 
     function changeAngle() {
         setMode(mode === "rad" ? "deg" : "rad");
+    }
+
+    function toggleSpecial() {
+        setCollapsed(prevCollapsed => !prevCollapsed);
     }
 
     function calculate(num) {
@@ -129,6 +134,10 @@ export default function Calculator() {
             case "angle":
                 changeAngle();
                 break;
+            case "resize-up":
+            case "resize-down":
+                toggleSpecial();
+                break;
             default:
                 calculate(input);
                 break;
@@ -140,12 +149,12 @@ export default function Calculator() {
             <p className="mode">
                 {mode}
             </p>
-            <div className="screen" mode={resultFocus}>
+            <div className="screen" data-mode={resultFocus}>
                 <div className="input">{expression}</div>
                 <div className="output" show={outputVisibility}>{screenVal}</div>
             </div>
             <div className="body">
-                <div className="special">
+                <div className="special" data-visible={!collapsed}>
                     { special.map(
                         (input) => {
                             const value = input.action === true ? input.id : input.action === false ? input.expression : input.content;
@@ -161,8 +170,9 @@ export default function Calculator() {
                     { regular.map(
                         (input) => {
                             const value = input.action === true ? input.id : input.action === false ? input.expression : input.content;
+                            const visibility = input.visible ? input.visible === "default" ? collapsed : !collapsed : null;
                             return (
-                                <Button key={input.id} handler={() => checkInput(value)}>{input.content}</Button>
+                                <Button key={input.id} handler={() => checkInput(value)} visibility={visibility}>{input.content}</Button>
                             )
                         }
                     )}

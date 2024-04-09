@@ -107,6 +107,21 @@ a {
 }
 
 
+.calculator {
+  width: 100%;
+  max-width: 50rem;
+  font-size: 2rem;
+}
+
+.mode {
+  font-size: 1rem;
+}
+
+.screen {
+  padding: 0.5rem;
+  text-align: right;
+}
+
 .output {
   visibility: hidden;
 }
@@ -115,6 +130,50 @@ a {
   visibility: visible;
 }
 
+.special {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 0.5rem;
+}
+
+.special[data-visible="false"] {
+  display: none;
+}
+
+.special button {
+  font-size: 1.25rem;
+  aspect-ratio: 1.5;
+  background-color: #333;
+  border: none;
+  border-radius: 2px;
+}
+
+.special button:hover {
+  background-color: #444;
+}
+
 .special button[data-visible="false"] {
   display: none;
+}
+
+.calculator .body .regular {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0.5rem;
+  justify-content:center;
+  margin-top: 0.5rem;
+}
+
+.calculator .body .regular button {
+  aspect-ratio: 1;
+  font-size: 2rem;
+}
+
+.calculator .body .regular button[data-visible="false"] {
+  display: none;
+}
+
+.calculator img {
+  max-height: 3rem;
+  max-width: 3rem;
 }
